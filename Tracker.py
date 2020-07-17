@@ -31,6 +31,7 @@ class PriceMonitor:
     # initialize with a ticker
     def __init__(self, ticker):
         self.ticker = ticker
+        self.info = yf.Ticker(ticker).info
 
     # create a function to get the change over the last trading week
     def get_trading_weekly_change(self):
@@ -82,10 +83,10 @@ def suppress_stdout():
 
 if __name__ == '__main__':
     # list the tickers
-    tickers = ['XLK', 'XLC', 'XLV', 'XLY', 'XLE', 'XLU', 'XLB', 'XLI']
+    tickers = ['SPY', 'XLK', 'XLC', 'XLV', 'XLY', 'XLE', 'XLU', 'XLB', 'XLI', 'MCHI', 'GLD']
     for ticker in tickers:
         with suppress_stdout():
             monitor = PriceMonitor(ticker)
             change = monitor.get_trading_weekly_change()
 
-        print(f"{ticker}: {change}\n")
+        print(f"{monitor.info['longName']} ({ticker}): {change}\n")
