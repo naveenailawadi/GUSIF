@@ -5,10 +5,6 @@ import sys
 import os
 
 
-# list the tickers
-TICKERS = ['XLK', 'XLC', 'XLV', 'XLY', 'XLE', 'XLU', 'XLB', 'XLI']
-
-
 # create a trading period class
 class TradingPeriod:
     def __init__(self, start_date, start_price, end_date, end_price):
@@ -85,7 +81,9 @@ def suppress_stdout():
 
 
 if __name__ == '__main__':
-    for ticker in TICKERS:
+    # list the tickers
+    tickers = ['XLK', 'XLC', 'XLV', 'XLY', 'XLE', 'XLU', 'XLB', 'XLI']
+    for ticker in tickers:
         with suppress_stdout():
             monitor = PriceMonitor(ticker)
             change = monitor.get_trading_weekly_change()
