@@ -89,9 +89,11 @@ def find_investments(old_investment_list, new_investment_list, old_date, new_dat
             new_shares = new / new_price_per_share
 
             if old_shares <= 1.1 * new_shares:
-                buys += (new_shares - old_shares) * average([new_price_per_share, old_price_per_share])
+                buys += (new_shares - old_shares) * \
+                    average([new_price_per_share, old_price_per_share])
             elif old_shares >= 1.1 * new_shares:
-                sells += (old_shares - new_shares) * average([new_price_per_share, old_price_per_share])
+                sells += (old_shares - new_shares) * \
+                    average([new_price_per_share, old_price_per_share])
         else:
             if old == 0 and new != 0:
                 buys += new
@@ -104,7 +106,8 @@ def find_investments(old_investment_list, new_investment_list, old_date, new_dat
 
 # create a function to calculate the new cash from a set of inputs
 def calculate_new_cash(total_fund, equity, old_cash, old_investment_list, new_investment_list, old_date, new_date, tickers):
-    buys, sells = find_investments(old_investment_list, new_investment_list, old_date, new_date, tickers)
+    buys, sells = find_investments(
+        old_investment_list, new_investment_list, old_date, new_date, tickers)
     new_cash = total_fund - equity - old_cash + buys - sells
 
     return new_cash
