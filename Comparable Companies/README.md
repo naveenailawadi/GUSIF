@@ -32,7 +32,7 @@ These scripts were originally created to automate the comps process (web scrapin
   - ev_to_fcf
 - Accessing attributes
   - `apple = Company('AAPL')`
-  - 'apple_info = apple.ev_to_fcf'
+  - `apple_info = apple.ev_to_fcf`
   - That's it! You automatically have all the financial metrics at your fingertips If you have a suggestion or find a bug, reach out to me and we can make this better!
 
   
