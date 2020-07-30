@@ -1,53 +1,8 @@
 from EarningsCalculator import TimeFrame
-from datetime import timedelta, datetime as dt
-import yfinance as yf
+from Tracker import Holding
+from datetime import datetime as dt
 import pandas as pd
 import numpy as np
-
-
-class Holding:
-    def __init__(self, ticker, value=None, shares=None, timestamp=dt.now()):
-        self.ticker = ticker
-
-        if (not value) and (not shares):
-            print('Include a value or share amount to initialize a holding')
-            return
-
-        # check for the value and shares
-        self.timestamp = timestamp
-        self.share_price = self.get_price(timestamp)
-
-        if value:
-            self.value = value
-        else:
-            self.value = shares * self.share_price
-
-        if shares:
-            self.shares = shares
-        else:
-            self.shares = self.value / self.share_price
-
-    def get_price(self, date):
-        data = yf.download(self.ticker, start=(
-            date - timedelta(days=3)), end=date)
-
-        # get closing price
-        price = float(data.iloc[[-1]]['Close'])
-
-        return price
-
-    def set_proportion(self, total_portfolio_value):
-        self.proportion = self.value / total_portfolio_value
-
-        return self.proportion
-
-    def update_value(self, date=dt.now()):
-        price = self.get_price(date)
-
-        self.value = self.shares * price
-
-    def __repr__(self):
-        return f"{self.ticker} (Shares: {self.shares})"
 
 
 class Portfolio:

@@ -1,2 +1,6 @@
 *.xlsx
 Private/
+
+
+# secrets
+secrets.py
