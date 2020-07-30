@@ -1,5 +1,7 @@
 from EarningsCalculator import TimeFrame
 from Tracker import Holding
+from Scraping import PorfolioScraper
+from secrets import BIVIO_USERNAME, BIVIO_PASSWORD
 from datetime import datetime as dt
 import pandas as pd
 import numpy as np
@@ -55,9 +57,6 @@ class HoldingsManager(TimeFrame):
 
     # create a function that gets all the current holdings
     def get_holdings(self, date, tickers=None):
-        if not tickers:
-            tickers = self.tickers
-
         current_values = self.holdings_data.tail(1)
 
         # make a holding for every ticker in the tickers
@@ -68,13 +67,18 @@ class HoldingsManager(TimeFrame):
         return holdings
 
     # match the current holdings to the sector
-    def get_sector_portfolios(self, date):
+    def get_sector_portfolios(self, date=None, holdings=None, holdings_dict=None):
+        portfolios = []
+        # match a sector name with the tickers in it
         portfolio_lists = [(sector, list(self.sector_data[sector]))
                            for sector in self.sectors]
 
-        portfolios = []
         for sector, portfolio in portfolio_lists:
-            holdings = self.get_holdings(date, tickers=portfolio)
+            if not holdings:
+                holdings = self.get_holdings(date, tickers=portfolio)
+            else:
+                holdings = [holdings_dict[ticker]
+                            for ticker in portfolio if not pd.isnull(ticker)]
 
             new_portfolio = Portfolio(sector, holdings)
             portfolios.append(new_portfolio)
@@ -82,34 +86,41 @@ class HoldingsManager(TimeFrame):
         return portfolios
 
     # make a handled way to make a holding
-    def create_holding(self, ticker, current_values, date):
-        if ticker in current_values.columns:
-            value = list(current_values[ticker])[0]
-            if not value:
-                return None
-            holding = Holding(ticker, value=value,
-                              timestamp=date)
-        else:
-            holding = None
-            print(f"No holding data found for {ticker}")
+
+    def create_holding(self, ticker=[], current_values=[], date=None, holding=None):
+        if not holding:
+            if ticker in current_values.columns:
+                value = list(current_values[ticker])[0]
+                if not value:
+                    return None
+                holding = Holding(ticker, value=value,
+                                  timestamp=date)
+            else:
+                holding = None
+                print(f"No holding data found for {ticker}")
 
         return holding
 
 
 if __name__ == '__main__':
-    date = dt.now()
     # load in the holdings
-    sectors = pd.read_csv('SummerEconRisk/Private/holdings.csv')
-    holdings = pd.read_csv(
-        'SummerEconRisk/Private/Tentative GCI 05-2019-05-2020.csv')
+    sectors_df = pd.read_csv('SummerEconRisk/Private/holdings.csv')
 
-    manager = HoldingsManager(holdings, sectors)
+    # get the holdings from a scraper
+    scraper = PorfolioScraper(headless=True)
+    scraper.login(BIVIO_USERNAME, BIVIO_PASSWORD)
+    holdings, date = scraper.scrape_holdings()
+    scraper.quit()
+    holdings_df_loading = {
+        holding.ticker: holding.shares for holding in holdings}
+    holdings_df = pd.DataFrame(
+        holdings_df_loading, index=list(range(len(holdings))))
 
-    portfolios = manager.get_sector_portfolios(dt(2020, 2, 28))
+    manager = HoldingsManager(holdings_df, sectors_df)
 
-    # update the portfolios
-    for portfolio in portfolios:
-        portfolio.make_current()
+    holdings_dict = {holding.ticker: holding for holding in holdings}
+    portfolios = manager.get_sector_portfolios(
+        holdings=holdings, holdings_dict=holdings_dict)
 
     # export the portfolio data to some folder
     portfolio_values = np.asarray(

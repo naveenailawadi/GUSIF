@@ -50,7 +50,7 @@ class PriceMonitor:
 
 # create a holding class
 class Holding(PriceMonitor):
-    def __init__(self, ticker, value=None, shares=None, timestamp=dt.now()):
+    def __init__(self, ticker, value=None, shares=None, share_price=None, timestamp=dt.now()):
         self.ticker = ticker
 
         if (not value) and (not shares):
@@ -59,7 +59,11 @@ class Holding(PriceMonitor):
 
         # check for the value and shares
         self.timestamp = timestamp
-        self.share_price = self.get_close_price(timestamp)
+
+        if not share_price:
+            self.share_price = self.get_close_price(timestamp)
+        else:
+            self.share_price = share_price
 
         if value:
             self.value = value

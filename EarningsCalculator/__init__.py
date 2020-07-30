@@ -1,7 +1,6 @@
 import pandas as pd
 import yfinance as yf
-from datetime import datetime as dt
-from datetime import timedelta
+from datetime import timedelta, datetime as dt
 
 
 class TimeFrame:
