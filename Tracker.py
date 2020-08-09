@@ -4,6 +4,8 @@ import yfinance as yf
 import sys
 import os
 
+DAY_DISTANCE = 3
+
 
 # create a monitor base class
 class PriceMonitor:
@@ -30,9 +32,7 @@ class PriceMonitor:
 
     def get_open_price(self, date):
         data = yf.download(self.ticker, start=(
-            date - timedelta(days=3)), end=date)
-
-        print(data)
+            date - timedelta(days=DAY_DISTANCE)), end=date)
 
         price = float(data.iloc[[-1]]['Open'])
 
@@ -40,40 +40,55 @@ class PriceMonitor:
 
     def get_close_price(self, date):
         data = yf.download(self.ticker, start=(
-            date - timedelta(days=3)), end=date)
+            date - timedelta(days=DAY_DISTANCE)), end=date)
 
         # get closing price
         price = float(data.iloc[[-1]]['Close'])
 
         return price
 
+    def get_returns_on_timeframe(self, start_date, end_date, absolute=False):
+        # get the close prices for both dates
+        try:
+            start_price = float(self.get_open_price(start_date))
+        except IndexError:
+            print(f"Trouble with price for {self.ticker}")
+            return None, None
+
+        end_price = float(self.get_close_price(end_date))
+
+        # get the return
+        absolute_returns = end_price - start_price
+        percent_returns = absolute_returns / start_price
+
+        return absolute_returns, percent_returns
+
 
 # create a holding class
 class Holding(PriceMonitor):
-    def __init__(self, ticker, value=None, shares=None, share_price=None, timestamp=dt.now()):
+    def __init__(self, ticker, value=None, shares=None, share_price=None, timestamp=dt.now(), sector=None):
+        # set the ticker and timestamp
         self.ticker = ticker
-
-        if (not value) and (not shares):
-            print('Include a value or share amount to initialize a holding')
-            return
-
-        # check for the value and shares
         self.timestamp = timestamp
+        self.sector = sector
 
-        if not share_price:
-            self.share_price = self.get_close_price(timestamp)
-        else:
-            self.share_price = share_price
+        if value or shares:
 
-        if value:
-            self.value = value
-        else:
-            self.value = shares * self.share_price
+            # check for the value and shares
+            if not share_price:
+                self.share_price = self.get_close_price(timestamp)
+            else:
+                self.share_price = share_price
 
-        if shares:
-            self.shares = shares
-        else:
-            self.shares = self.value / self.share_price
+            if value:
+                self.value = value
+            else:
+                self.value = shares * self.share_price
+
+            if shares:
+                self.shares = shares
+            else:
+                self.shares = self.value / self.share_price
 
     def set_proportion(self, total_portfolio_value):
         self.proportion = self.value / total_portfolio_value
@@ -81,9 +96,18 @@ class Holding(PriceMonitor):
         return self.proportion
 
     def update_value(self, date=dt.now()):
-        price = self.get_close_price(date)
+        try:
+            price = self.get_close_price(date)
 
-        self.value = self.shares * price
+            self.value = self.shares * price
+            updated = True
+        except IndexError:
+            updated = False
+
+        return updated
+
+    def update_sector(self, sector):
+        self.sector = sector
 
     def __repr__(self):
         return f"{self.ticker} (Shares: {self.shares})"
@@ -123,13 +147,19 @@ def suppress_stdout():
             sys.stdout = old_stdout
 
 
-if __name__ == '__main__':
-    # list the tickers
-    tickers = ['SPY', 'XLK', 'XLC', 'XLV', 'XLY',
-               'XLE', 'XLU', 'XLB', 'XLI', 'MCHI', 'GLD']
-    for ticker in tickers:
-        with suppress_stdout():
-            monitor = PriceMonitor(ticker)
-            change = monitor.get_trading_weekly_change()
+def convert_date(date_raw):
+    periods = date_raw.split('/')
 
-        print(f"{monitor.info['longName']} ({ticker}): {change}\n")
+    year = str(periods[2])
+    # reformat year
+    if len(year) != 4:
+        year = int(f"20{year[-2:]}")
+    else:
+        year = int(year)
+
+    month = int(periods[0])
+    day = int(periods[1])
+
+    date = dt(year, month, day)
+
+    return date

@@ -9,11 +9,15 @@ import numpy as np
 
 class Portfolio:
     def __init__(self, name, holdings=[]):
-        self.holdings = holdings
         self.name = name
 
+        for holding in holdings:
+            holding.update_sector(self.name)
+        self.holdings = holdings
+
     def add_holding(self, ticker, value=None, shares=None, timestamp=dt.now()):
-        new_holding = Holding(ticker, value, shares, timestamp)
+        new_holding = Holding(ticker, value, shares,
+                              timestamp, sector=self.name)
 
         self.holdings.append(new_holding)
 
@@ -53,6 +57,7 @@ class HoldingsManager(TimeFrame):
 
         holding_tickers = [column.split(' ')[0].strip()
                            for column in self.holdings_data]
+
         self.holdings_data.columns = holding_tickers
 
     # create a function that gets all the current holdings
@@ -102,15 +107,16 @@ class HoldingsManager(TimeFrame):
         return holding
 
 
-if __name__ == '__main__':
+def make_portfolios(holdings_filepath):
     # load in the holdings
-    sectors_df = pd.read_csv('SummerEconRisk/Private/holdings.csv')
+    sectors_df = pd.read_csv(holdings_filepath)
 
-    # get the holdings from a scraper
     scraper = PorfolioScraper(headless=True)
     scraper.login(BIVIO_USERNAME, BIVIO_PASSWORD)
     holdings, date = scraper.scrape_holdings()
     scraper.quit()
+
+    # get the holdings from a scraper
     holdings_df_loading = {
         holding.ticker: holding.shares for holding in holdings}
     holdings_df = pd.DataFrame(
@@ -121,6 +127,12 @@ if __name__ == '__main__':
     holdings_dict = {holding.ticker: holding for holding in holdings}
     portfolios = manager.get_sector_portfolios(
         holdings=holdings, holdings_dict=holdings_dict)
+
+    return portfolios, date
+
+
+if __name__ == '__main__':
+    portfolios, date = make_portfolios('SummerEconRisk/Private/holdings.csv')
 
     # export the portfolio data to some folder
     portfolio_values = np.asarray(
