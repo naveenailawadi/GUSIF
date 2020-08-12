@@ -4,7 +4,7 @@ from EarningsCalculator import calculate_new_cash
 
 
 # read in the data
-filename = input('What is the name of the file that you want to read in? \n')
+filename = input('What is the name of the file that you want to read in? \n').strip().replace('\\', '')
 
 if '.' in filename:
     # get first half
