@@ -1,12 +1,11 @@
 from Tracker import Holding
+from constants import DEFAULT_WAIT_INCREMENT
 from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from bs4 import BeautifulSoup as bs
 from datetime import datetime as dt
 import pandas as pd
 import time
-
-DEFAULT_WAIT_INCREMENT = 3
 
 
 # create a class that scrapes bivio
