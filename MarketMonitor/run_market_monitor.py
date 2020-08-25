@@ -16,13 +16,13 @@ BOND_MONITOR = BondMonitor()
 # create lists of the symbols
 FOREX_SYMBOLS = ['EUR', 'CNY']
 BOND_YEARS = [10, 30]
-RATES_SEND_TIME = '05:00'
+RATES_SEND_TIME = '09:00'
 DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
 RATES_HTML = 'MarketMonitor/templates/rates.html'
 
 # sector settings
 SECTORS = ['SPY', 'XLK', 'XLC', 'XLV', 'XLY', 'XLE', 'XLU', 'XLB', 'XLI']
-SECTORS_SEND_TIME = '12:30'
+SECTORS_SEND_TIME = '16:30'
 SECTORS_HTML = 'MarketMonitor/templates/sectors.html'
 
 
