@@ -4,3 +4,7 @@ Private/
 
 # secrets
 secrets.py
+
+# ouput from nohup
+*.out
+*.log

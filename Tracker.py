@@ -28,7 +28,7 @@ class PriceMonitor:
 
         # return a trading period
         period = TradingPeriod(start_date, start_price, today, end_price)
-        return period
+        return f"{round(100 * period.percent_change(), 2)}%"
 
     def get_open_price(self, date):
         data = yf.download(self.ticker, start=(

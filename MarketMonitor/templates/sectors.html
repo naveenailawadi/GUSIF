@@ -1,0 +1,7 @@
+<i>{{information['date']}} Weekly Changes</i>
+
+{% for sector in information['sectors'] %}
+<b>{{ sector['name'] }} ({{ sector['ticker'] }})</b>
+    {{ sector['change'] }}
+
+{% endfor %}

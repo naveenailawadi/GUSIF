@@ -1,7 +1,8 @@
-from monitor import ForexMonitor, CommodityMonitor, BondMonitor
-from TelegramBot import Messenger
+from MarketMonitor import ForexMonitor, CommodityMonitor, BondMonitor
+from MarketMonitor.secrets import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
+from MarketMonitor.TelegramBot import Messenger
+from Tracker import PriceMonitor, suppress_stdout
 from datetime import datetime as dt
-from secrets import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
 import schedule
 import time
 
@@ -15,15 +16,27 @@ BOND_MONITOR = BondMonitor()
 # create lists of the symbols
 FOREX_SYMBOLS = ['EUR', 'CNY']
 BOND_YEARS = [10, 30]
-SEND_TIME = '09:00'
+RATES_SEND_TIME = '09:00'
 DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
+RATES_HTML = 'MarketMonitor/templates/rates.html'
+
+# sector settings
+SECTORS = ['SPY', 'XLK', 'XLC', 'XLV', 'XLY', 'XLE', 'XLU', 'XLB', 'XLI']
+SECTORS_SEND_TIME = '04:30'
+SECTORS_HTML = 'MarketMonitor/templates/sectors.html'
 
 
-# create a function that gets all the prices and sends them
-def send():
+def get_date():
     # get the current date
     today = dt.now()
     date = f"{today.month}/{today.day}/{today.year} ({today.hour}:{str(today.minute).zfill(2)})"
+
+    return date
+
+
+# create a function that gets all the prices and sends them
+def send_rates():
+    date = get_date()
 
     # get the current forex prices
     forex_rates = [FOREX_MONITOR.usd_to(symbol) for symbol in FOREX_SYMBOLS]
@@ -43,15 +56,42 @@ def send():
     }
 
     # send it with telegram
-    MESSENGER.send_html(information)
+    MESSENGER.send_html(information, RATES_HTML)
+
+
+def check_sectors():
+    sector_info = []
+    date = get_date()
+    for ticker in SECTORS:
+        with suppress_stdout():
+            monitor = PriceMonitor(ticker)
+            change = monitor.get_trading_weekly_change()
+        info = {
+            'ticker': monitor.ticker,
+            'name': monitor.info['longName'],
+            'change': change
+        }
+        sector_info.append(info)
+
+    # render some html to send
+    information = {
+        'date': date,
+        'sectors': sector_info
+    }
+
+    MESSENGER.send_html(information, SECTORS_HTML)
 
 
 # send it over and over on a schedule
 if __name__ == '__main__':
     for name in DAYS:
-        statement = f"schedule.every().{name}.at(SEND_TIME).do(send)"
+        statement = f"schedule.every().{name}.at(RATES_SEND_TIME).do(send_rates)"
         exec(statement)
         print(f"Added {name}")
+
+    # add the sector one
+    schedule.every().friday.at(SECTORS_SEND_TIME).do(check_sectors)
+    print('Added sector monitor')
 
     while True:
         # Checks whether a scheduled task
