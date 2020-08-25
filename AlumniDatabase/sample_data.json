@@ -1,0 +1,341 @@
+{
+    "id": "xrEQ8sMptvJfBiVgfnAIBA_0000",
+    "full_name": "ryan ackert",
+    "first_name": "ryan",
+    "middle_initial": null,
+    "middle_name": null,
+    "last_name": "ackert",
+    "gender": "male",
+    "birth_year": null,
+    "birth_date": null,
+    "linkedin_url": "linkedin.com/in/ryan-ackert-661525a0",
+    "linkedin_username": "ryan-ackert-661525a0",
+    "linkedin_id": "359613289",
+    "facebook_url": null,
+    "facebook_username": null,
+    "facebook_id": null,
+    "twitter_url": null,
+    "twitter_username": null,
+    "github_url": null,
+    "github_username": null,
+    "work_email": null,
+    "mobile_phone": null,
+    "industry": "financial services",
+    "job_title": "prime brokerage sales",
+    "job_title_role": "sales",
+    "job_title_levels": [],
+    "job_company_id": "barclays-investment-bank",
+    "job_company_name": "barclays investment bank",
+    "job_company_website": null,
+    "job_company_size": "10001+",
+    "job_company_founded": null,
+    "job_company_industry": "financial services",
+    "job_company_linkedin_url": "linkedin.com/company/barclays-investment-bank",
+    "job_company_linkedin_id": "1421",
+    "job_company_facebook_url": null,
+    "job_company_twitter_url": null,
+    "job_company_location_name": "new york, new york, united states",
+    "job_company_location_locality": "new york",
+    "job_company_location_region": "new york",
+    "job_company_location_geo": "40.71,-74.00",
+    "job_company_location_street_address": null,
+    "job_company_location_address_line_2": null,
+    "job_company_location_postal_code": null,
+    "job_company_location_country": "united states",
+    "job_company_location_continent": "north america",
+    "job_last_updated": "2020-05-01",
+    "location_name": "new york, new york, united states",
+    "location_locality": "new york",
+    "location_region": "new york",
+    "location_country": "united states",
+    "location_continent": "north america",
+    "location_street_address": null,
+    "location_address_line_2": null,
+    "location_postal_code": null,
+    "location_geo": "40.71,-74.00",
+    "location_last_updated": "2020-05-01",
+    "phone_numbers": [
+        "+12026875437"
+    ],
+    "emails": [
+        {
+            "address": "ackertr@georgetown.edu",
+            "type": "professional"
+        }
+    ],
+    "interests": [
+        "cooking",
+        "skiing",
+        "soccer",
+        "music",
+        "golf",
+        "travel"
+    ],
+    "skills": [
+        "microsoft office",
+        "powerpoint",
+        "research",
+        "microsoft word",
+        "microsoft excel",
+        "customer service",
+        "social media",
+        "teamwork"
+    ],
+    "location_names": [
+        "new york, new york, united states",
+        "rye, new york, united states"
+    ],
+    "regions": [
+        "new york, united states"
+    ],
+    "countries": [
+        "united states"
+    ],
+    "street_addresses": [],
+    "experience": [
+        {
+            "company": {
+                "name": "barclays",
+                "size": "10001+",
+                "id": "barclays-bank",
+                "founded": null,
+                "industry": "financial services",
+                "location": {
+                    "name": "london, greater london, united kingdom",
+                    "locality": "london",
+                    "region": "greater london",
+                    "country": "united kingdom",
+                    "continent": "europe",
+                    "street_address": "1 churchill place",
+                    "address_line_2": null,
+                    "postal_code": null,
+                    "geo": "51.50,-0.12"
+                },
+                "linkedin_url": "linkedin.com/company/barclays-bank",
+                "linkedin_id": "1426",
+                "facebook_url": null,
+                "twitter_url": "twitter.com/barclaysplc",
+                "website": "barclays.com"
+            },
+            "location_names": [],
+            "end_date": "2016-08",
+            "start_date": "2016-05",
+            "title": {
+                "name": "sales and trading summer analyst",
+                "role": "sales",
+                "levels": []
+            },
+            "is_primary": false
+        },
+        {
+            "company": {
+                "name": "barclays investment bank",
+                "size": "10001+",
+                "id": "barclays-investment-bank",
+                "founded": null,
+                "industry": "financial services",
+                "location": {
+                    "name": "new york, new york, united states",
+                    "locality": "new york",
+                    "region": "new york",
+                    "country": "united states",
+                    "continent": "north america",
+                    "street_address": null,
+                    "address_line_2": null,
+                    "postal_code": null,
+                    "geo": "40.71,-74.00"
+                },
+                "linkedin_url": "linkedin.com/company/barclays-investment-bank",
+                "linkedin_id": "1421",
+                "facebook_url": null,
+                "twitter_url": null,
+                "website": null
+            },
+            "location_names": [
+                "new york, new york, united states"
+            ],
+            "end_date": null,
+            "start_date": "2017-08",
+            "title": {
+                "name": "prime brokerage sales",
+                "role": "sales",
+                "levels": []
+            },
+            "is_primary": true
+        },
+        {
+            "company": {
+                "name": "georgetown university",
+                "size": "5001-10000",
+                "id": "georgetown-university",
+                "founded": null,
+                "industry": "higher education",
+                "location": {
+                    "name": "washington, district of columbia, united states",
+                    "locality": "washington",
+                    "region": "district of columbia",
+                    "country": "united states",
+                    "continent": "north america",
+                    "street_address": "3700 o street northwest",
+                    "address_line_2": null,
+                    "postal_code": "20057",
+                    "geo": "38.89,-77.03"
+                },
+                "linkedin_url": "linkedin.com/company/georgetown-university",
+                "linkedin_id": "4794",
+                "facebook_url": "facebook.com/georgetownmcdonough",
+                "twitter_url": "twitter.com/msbgu",
+                "website": "georgetown.edu"
+            },
+            "location_names": [],
+            "end_date": "2017-05",
+            "start_date": "2014-08",
+            "title": {
+                "name": "georgetown intramural supervisor",
+                "role": null,
+                "levels": [
+                    "manager"
+                ]
+            },
+            "is_primary": false
+        },
+        {
+            "company": {
+                "name": "allianz global corporate & specialty (agcs)",
+                "size": "5001-10000",
+                "id": "allianz-global-corporate-&-specialty-agcs-",
+                "founded": "2006",
+                "industry": "insurance",
+                "location": {
+                    "name": "munich, bavaria, germany",
+                    "locality": "munich",
+                    "region": "bavaria",
+                    "country": "germany",
+                    "continent": "europe",
+                    "street_address": null,
+                    "address_line_2": null,
+                    "postal_code": null,
+                    "geo": "48.13,11.57"
+                },
+                "linkedin_url": "linkedin.com/company/allianz-global-corporate-&-specialty-agcs-",
+                "linkedin_id": "282973",
+                "facebook_url": null,
+                "twitter_url": "twitter.com/agcs_insurance",
+                "website": null
+            },
+            "location_names": [
+                "new york, new york, united states"
+            ],
+            "end_date": "2014-08",
+            "start_date": "2014-06",
+            "title": {
+                "name": "international insurance solutions, summer intern",
+                "role": null,
+                "levels": [
+                    "training"
+                ]
+            },
+            "is_primary": false
+        }
+    ],
+    "education": [
+        {
+            "school": {
+                "name": "rye high school",
+                "type": "secondary school",
+                "id": null,
+                "location": null,
+                "linkedin_url": null,
+                "facebook_url": null,
+                "twitter_url": null,
+                "linkedin_id": null,
+                "website": null,
+                "domain": null
+            },
+            "end_date": "2013",
+            "start_date": "2009",
+            "gpa": null,
+            "degrees": [],
+            "majors": [],
+            "minors": []
+        },
+        {
+            "school": {
+                "name": "georgetown university mcdonough school of business",
+                "type": "post-secondary institution",
+                "id": "7298205b-17c1-4f6f-b73e-e7aa1f5e19c3",
+                "location": {
+                    "name": "washington, district of columbia, united states",
+                    "locality": "washington",
+                    "region": "district of columbia",
+                    "country": "united states",
+                    "continent": "north america"
+                },
+                "linkedin_url": "linkedin.com/school/georgetownmcdonough",
+                "facebook_url": null,
+                "twitter_url": null,
+                "linkedin_id": "18051",
+                "website": "msb.georgetown.edu",
+                "domain": "georgetown.edu"
+            },
+            "end_date": "2016",
+            "start_date": "2013",
+            "gpa": null,
+            "degrees": [
+                "bachelors",
+                "bachelor of science in business administration",
+                "bachelor of science"
+            ],
+            "majors": [
+                "business administration",
+                "accounting",
+                "finance"
+            ],
+            "minors": []
+        },
+        {
+            "school": {
+                "name": "university of oxford",
+                "type": "post-secondary institution",
+                "id": "b99dc8c7-41fd-4652-a052-c2bc6ce5ba12",
+                "location": {
+                    "name": "oxford, oxfordshire, united kingdom",
+                    "locality": "oxford",
+                    "region": "oxfordshire",
+                    "country": "united kingdom",
+                    "continent": "europe"
+                },
+                "linkedin_url": "linkedin.com/school/oxforduni",
+                "facebook_url": null,
+                "twitter_url": null,
+                "linkedin_id": "12716",
+                "website": "ox.ac.uk",
+                "domain": "ox.ac.uk"
+            },
+            "end_date": "2015",
+            "start_date": "2015",
+            "gpa": null,
+            "degrees": [],
+            "majors": [
+                "management",
+                "international finance",
+                "finance"
+            ],
+            "minors": []
+        }
+    ],
+    "profiles": [
+        {
+            "network": "linkedin",
+            "id": "359613289",
+            "url": "linkedin.com/in/ryan-ackert-661525a0",
+            "username": "ryan-ackert-661525a0"
+        }
+    ],
+    "version_status": {
+        "status": "updated",
+        "contains": [],
+        "previous_version": "10",
+        "current_version": "11"
+    }
+}

@@ -2,6 +2,7 @@ from constants import DEFAULT_WAIT_INCREMENT
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
+import requests
 import time
 
 
@@ -69,3 +70,48 @@ class LinkedInBot:
 
 
 # create a class that add PDL data
+class DataExtender:
+    # initialize with a PDL key
+    def __init__(self, pdl_key):
+        # this root will be used through most functions
+        self.root = f"https://api.peopledatalabs.com/v5/person?pretty=true&api_key={pdl_key}&"
+
+    # create a function that constructs a linkedin request
+    def create_profile_request(self, first_name, last_name, linkedin_profile, school="Georgetown University"):
+        params = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'profile': linkedin_profile
+        }
+
+        if school:
+            params['school'] = school
+
+        return params
+
+    # this gets the general data for some json
+    def get_data(self, params):
+        raw = requests.get(self.root, params=params)
+        if '200' in str(raw):
+            print('Request successful')
+            data = raw.json()['data']
+        elif '400' in str(raw):
+            data = None
+        else:
+            data = None
+
+        return data
+
+    # create an integrated request for a linkedin profile with name splitting
+    def extend_alum(self, first_name, last_name, linkedin_profile, school="Georgetown University"):
+        params = self.create_profile_request(
+            first_name, last_name, linkedin_profile, school=school)
+
+        # get the data
+        data = self.get_data(params)
+
+        # check if there is data
+        if not data:
+            return None
+
+        # get the important data
