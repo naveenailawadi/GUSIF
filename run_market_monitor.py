@@ -21,7 +21,7 @@ DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
 RATES_HTML = 'MarketMonitor/templates/rates.html'
 
 # sector settings
-SECTORS = ['SPY', 'XLK', 'XLC', 'XLV', 'XLY', 'XLE', 'XLU', 'XLB', 'XLI']
+SECTORS = ['SPY', 'XLK', 'XLC', 'XLV', 'XLY', 'XLF', 'XLE', 'XLU', 'XLB', 'XLI']
 SECTORS_SEND_TIME = '16:30'
 SECTORS_HTML = 'MarketMonitor/templates/sectors.html'
 
