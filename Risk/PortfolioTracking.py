@@ -6,6 +6,9 @@ from datetime import datetime as dt
 import pandas as pd
 import numpy as np
 
+HOLDINGS_CSV = 'Risk/Private/holdings.csv'
+EXPORT_DIR = 'Risk/Private/'
+
 
 class Portfolio:
     def __init__(self, name, holdings=[]):
@@ -132,7 +135,7 @@ def make_portfolios(holdings_filepath):
 
 
 if __name__ == '__main__':
-    portfolios, date = make_portfolios('SummerEconRisk/Private/holdings.csv')
+    portfolios, date = make_portfolios(HOLDINGS_CSV)
 
     # export the portfolio data to some folder
     portfolio_values = np.asarray(
@@ -145,7 +148,7 @@ if __name__ == '__main__':
     }
     sector_export_df = pd.DataFrame(sector_weighting_dict)
     sector_export_df.to_csv(
-        f"SummerEconRisk/Private/Sector Weight ({date.month}-{date.day}-{date.year}).csv", index=False)
+        f"{EXPORT_DIR}Sector Weight ({date.month}-{date.day}-{date.year}).csv", index=False)
 
     # analyze each stock individually
 
@@ -183,4 +186,4 @@ if __name__ == '__main__':
 
     holding_weight_df = pd.DataFrame(holding_weighting_dict)
     holding_weight_df.to_csv(
-        f"SummerEconRisk/Private/Holdings Weight ({date.month}-{date.day}-{date.year}).csv", index=False)
+        f"{EXPORT_DIR}Holdings Weight ({date.month}-{date.day}-{date.year}).csv", index=False)

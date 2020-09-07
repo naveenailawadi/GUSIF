@@ -31,15 +31,18 @@ class TimeFrame:
 
     # take the date and make it into a general unix time
     def handle_date(self, date_raw):
-        date = date_raw.split('/')
-        month = int(date[0])
-        day = int(date[1])
-        if len(str(date[2])) == 2:
-            year = int(f"20{date[2]}")
-        elif len(str(date[2])) == 4:
-            year = int(date[2])
+        try:
+            date = date_raw.split('/')
+            month = int(date[0])
+            day = int(date[1])
+            if len(str(date[2])) == 2:
+                year = int(f"20{date[2]}")
+            elif len(str(date[2])) == 4:
+                year = int(date[2])
 
-        unix_time = dt(year, month, day).timestamp()
+            unix_time = dt(year, month, day).timestamp()
+        except AttributeError:
+            unix_time = date_raw.timestamp()
 
         return unix_time
 
