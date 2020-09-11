@@ -58,6 +58,7 @@ class AdminLoginResource(Resource):
             return {'message': 'You are not allowed to access this resource.'}, 403
 
         # get a token and give it to the admin
-        token = jwt.encode({'admin_access': True, 'exp': dt.utcnow() + timedelta(minutes=TOKEN_MINUTES)}, app.config['SECRET_KEY']).decode('UTF-8')
+        token = jwt.encode({'admin_access': True, 'exp': dt.utcnow(
+        ) + timedelta(minutes=TOKEN_MINUTES)}, app.config['SECRET_KEY']).decode('UTF-8')
 
         return {'status': 'success', 'token': token}

@@ -1,6 +1,8 @@
 from flask_restful import Api
 from api import app
-from api.resources.User import UserManagementResource, AdminUserManagementResource, LoginResource
+from api.resources.User import UserManagementResource, LoginResource
+from api.resources.Admin import AdminUserManagementResource
+from api.resources.Alumni import AlumniAdditionResource
 
 
 # reroute traffic
@@ -16,3 +18,6 @@ api = Api(app)
 api.add_resource(UserManagementResource, '/UserManagement')
 api.add_resource(AdminUserManagementResource, '/AdminUserManagement')
 api.add_resource(LoginResource, '/Login')
+
+# alumni
+api.add_resource(AlumniAdditionResource, '/AlumniAddition')

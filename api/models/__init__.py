@@ -4,7 +4,7 @@ from api.admin_config import ADMIN_PROFILE
 
 
 # create a user model
-class User(db.Model):
+class UserModel(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(320), nullable=False, unique=True)
@@ -17,7 +17,7 @@ class User(db.Model):
 # create a function to validate users
 def validate_user(email, password):
     # get the user
-    user = User.query.filter_by(email=email).first()
+    user = UserModel.query.filter_by(email=email).first()
 
     if not user:
         return False, {'message': f"no account associated with {email}"}, 404

@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '45e2b67051014e2ba07df47f533c1f14'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///locovotiv.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///gci.db'
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
