@@ -57,7 +57,7 @@ class InterestModel(db.Model):
 class ExperienceModel(db.Model):
     __tablename__ = "experience"
     id = db.Column(db.Integer, primary_key=True)
-    company = db.relationship("Company", backref="experience")
+    company = db.relationship("CompanyModel", backref="experience")
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
     title_name = db.Column(db.String(100))
@@ -71,7 +71,7 @@ class CompanyModel(db.Model):
     __tablename__ = "company"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    location = db.relationship("Location", backref="company")
+    location = db.relationship("LocationModel", backref="company")
 
     experience_id = db.Column(
         db.Integer, db.ForeignKey("experience.id"))
@@ -96,8 +96,8 @@ class SchoolModel(db.Model):
     name = db.Column(db.String(100))
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
-    majors = db.relationship("Major", backref="school")
-    minors = db.relationship("Minor", backref="school")
+    majors = db.relationship("MajorModel", backref="school")
+    minors = db.relationship("MinorModel", backref="school")
 
     alumni_id = db.Column(
         db.Integer, db.ForeignKey("alumni.id"))
