@@ -20,11 +20,11 @@ class AlumniModel(db.Model):
     job_title_role = db.Column(db.String(100))
     job_company_industry = db.Column(db.String(100))
     job_company_locations_locality = db.Column(db.String(100))
-    phone_numbers = db.relationship("PhoneNumber", backref="alumni")
-    emails = db.relationship("Email", backref="alumni")
-    interests = db.relationship("Interest", backref="alumni")
-    experiences = db.relationship("Experience", backref="alumni")
-    education = db.relationship("School", backref="alumni")
+    phone_numbers = db.relationship("PhoneNumberModel", backref="alumni")
+    emails = db.relationship("EmailModel", backref="alumni")
+    interests = db.relationship("InterestModel", backref="alumni")
+    experiences = db.relationship("ExperienceModel", backref="alumni")
+    education = db.relationship("SchoolModel", backref="alumni")
 
     def __repr__(self):
         return '<Alumni %r>' % self.first_name
@@ -71,7 +71,7 @@ class CompanyModel(db.Model):
     __tablename__ = "company"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    location = db.relationship("Location", backref="Company")
+    location = db.relationship("Location", backref="company")
 
     experience_id = db.Column(
         db.Integer, db.ForeignKey("experience.id"))
@@ -96,8 +96,8 @@ class SchoolModel(db.Model):
     name = db.Column(db.String(100))
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
-    majors = db.relationship("Major", backref="School")
-    minors = db.relationship("Minor", backref="School")
+    majors = db.relationship("Major", backref="school")
+    minors = db.relationship("Minor", backref="school")
 
     alumni_id = db.Column(
         db.Integer, db.ForeignKey("alumni.id"))
