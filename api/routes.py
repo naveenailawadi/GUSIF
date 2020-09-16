@@ -3,7 +3,7 @@ from api import app
 from api.resources.User import UserManagementResource, LoginResource
 from api.resources.Admin import AdminUserManagementResource
 from api.resources.Alumni import AlumniAdditionResource
-
+from api.resources.Alumni import AlumniAccessResource
 
 # reroute traffic
 @app.route('/')
@@ -21,3 +21,4 @@ api.add_resource(LoginResource, '/Login')
 
 # alumni
 api.add_resource(AlumniAdditionResource, '/AlumniAddition')
+api.add_resource(AlumniAccessResource, '/AlumniAccess')
