@@ -1,5 +1,5 @@
-# GCI
-These are programs written for GCI
+# GUSIF
+These are programs written for GUSIF (previously forked from GCI)
 
 ## Tracker.py
   - Open Terminal or Command Line (windows)
