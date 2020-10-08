@@ -9,12 +9,12 @@ import time
 # create a class that logs into linkedin
 class LinkedInBot:
     def __init__(self, headless=False, wait_increment=DEFAULT_WAIT_INCREMENT):
-        options = webdriver.ChromeOptions()
+        options = webdriver.FirefoxOptions()
 
         if headless:
             options.add_argument('--headless')
 
-        self.driver = webdriver.Chrome(options=options)
+        self.driver = webdriver.Firefox(options=options)
 
         self.wait_increment = wait_increment
 
@@ -63,6 +63,50 @@ class LinkedInBot:
 
         # return the linkedin profile
         return profile
+
+    # make a function to connect with people
+    def connect(self, linkedin_url):
+        self.driver.get(linkedin_url)
+
+        time.sleep(self.wait_increment)
+
+        # get the connect button
+        connect_btn = None
+        try:
+            connect_btn = self.driver.find_element_by_xpath(
+                '//button[@class="pv-s-profile-actions pv-s-profile-actions--connect ml2 artdeco-button artdeco-button--2 artdeco-button--primary ember-view"]')
+        except NoSuchElementException:
+            pass
+
+        if not connect_btn:
+            # click more
+            try:
+                more_btn = self.driver.find_element_by_xpath(
+                    '//button[@class="ml2 pv-s-profile-actions__overflow-toggle artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary artdeco-dropdown__trigger artdeco-dropdown__trigger--placement-bottom ember-view"]')
+            except NoSuchElementException:
+                return  # no profile here
+
+            more_btn.click()
+
+            # find connect here
+            time.sleep(self.wait_increment)
+
+            try:
+                connect_btn = self.driver.find_element_by_xpath(
+                    '//div[@class="pv-s-profile-actions pv-s-profile-actions--connect pv-s-profile-actions__overflow-button full-width text-align-left artdeco-dropdown__item artdeco-dropdown__item--is-dropdown ember-view"]')
+            except NoSuchElementException:
+                print(f"Connected with {linkedin_url}")
+
+        # click connect
+        if connect_btn:
+            connect_btn.click()
+            time.sleep(self.wait_increment)
+
+            # click done
+            done_btn = self.driver.find_element_by_xpath(
+                '//button[@class="ml1 artdeco-button artdeco-button--3 artdeco-button--primary ember-view"]')
+            done_btn.click()
+            time.sleep(self.wait_increment)
 
     # quit the driver
     def quit(self):
