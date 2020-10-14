@@ -95,7 +95,7 @@ class LinkedInBot:
                 connect_btn = self.driver.find_element_by_xpath(
                     '//div[@class="pv-s-profile-actions pv-s-profile-actions--connect pv-s-profile-actions__overflow-button full-width text-align-left artdeco-dropdown__item artdeco-dropdown__item--is-dropdown ember-view"]')
             except NoSuchElementException:
-                print(f"Connected with {linkedin_url}")
+                print(f"Already connected with {linkedin_url}")
 
         # click connect
         if connect_btn:
