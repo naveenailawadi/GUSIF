@@ -5,12 +5,6 @@ from api.resources.Admin import AdminUserManagementResource
 from api.resources.Alumni import AlumniAdditionResource
 from api.resources.Alumni import AlumniAccessResource
 
-# reroute traffic
-@app.route('/')
-def root_page():
-    return('<a href="http://locovotiv.com">Main Site</a>')
-
-
 # create an api
 api = Api(app)
 

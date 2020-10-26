@@ -1,6 +1,6 @@
 from api import db
 from api import bcrypt
-from api.admin_config import ADMIN_PROFILE
+from api.secrets import ADMIN_PROFILE
 
 
 # create a user model
