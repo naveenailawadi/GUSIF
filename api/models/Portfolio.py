@@ -52,6 +52,9 @@ class SectorPortfolioModel(db.Model):
     holdings = db.relationship(
         'HoldingModel', backref='sector_portfolios', dynamic=True)
 
+    # add a capital adjustment
+    cap_adj = db.Column(db.Float, nullable=False)
+
 
 # make a holding model
 class HoldingModel(db.Model):
