@@ -12,7 +12,10 @@ class PriceMonitor:
     # initialize with a ticker
     def __init__(self, ticker):
         self.ticker = ticker
-        self.info = yf.Ticker(ticker).info
+        try:
+            self.info = yf.Ticker(ticker).info
+        except ValueError:
+            self.info = {}
 
     # create a function to get the change over the last trading week
     def get_trading_weekly_change(self):
@@ -30,20 +33,26 @@ class PriceMonitor:
         period = TradingPeriod(start_date, start_price, today, end_price)
         return f"{round(100 * period.percent_change(), 2)}%"
 
-    def get_open_price(self, date):
+    def get_open_price(self, date=dt.now()):
         data = yf.download(self.ticker, start=(
             date - timedelta(days=DAY_DISTANCE)), end=date)
 
-        price = float(data.iloc[[-1]]['Open'])
+        try:
+            price = float(data.iloc[[-1]]['Open'])
+        except IndexError:
+            price = 0
 
         return price
 
-    def get_close_price(self, date):
+    def get_close_price(self, date=dt.now()):
         data = yf.download(self.ticker, start=(
             date - timedelta(days=DAY_DISTANCE)), end=date)
 
         # get closing price
-        price = float(data.iloc[[-1]]['Close'])
+        try:
+            price = float(data.iloc[[-1]]['Close'])
+        except IndexError:
+            price = 0
 
         return price
 

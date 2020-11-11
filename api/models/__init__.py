@@ -1,6 +1,8 @@
 from api import db
 from api import bcrypt
 from api.secrets import ADMIN_PROFILE
+from datetime import datetime as dt
+from sqlalchemy.exc import NoInspectionAvailable
 
 
 # create a user model
@@ -38,11 +40,43 @@ def validate_admin(email, password):
     else:
         return True
 
+# check an attribute
+
+
+def get_and_check_attribute(obj, c):
+    try:
+        value = getattr(obj, c.key)
+    except NoInspectionAvailable:
+        return None
+
+    # check dt
+    if type(value) is dt:
+        value = value.strftime('%s')
+
+    return value
+
 
 def object_as_dict(obj):
-    obj_dict = {c.key: getattr(obj, c.key)
-                for c in db.inspect(obj).mapper.column_attrs}
-
-    obj_dict['previous_activity_date'] = obj_dict['previous_activity_date'].strftime(
-        '%s')
+    if obj:
+        obj_dict = {c.key: get_and_check_attribute(obj, c)
+                    for c in db.inspect(obj).mapper.column_attrs}
+    else:
+        obj_dict = {}
     return obj_dict
+
+
+# make a function that copies models
+def copy_model(model):
+    db.session.expunge(model)
+
+    db.make_transient(model)
+    model.id = None
+
+    # add the model back to the session and refresh the id
+    db.session.add(model)
+    db.session.flush()
+    db.session.refresh(model)
+
+    print(f"New id: {model.id}")
+
+    return model
