@@ -56,7 +56,7 @@ class BondMonitor:
             f"https://ycharts.com/indicators/{year_amount}_year_treasury_rate")
         time.sleep(SLEEP_INCREMENT)
         rate = driver.find_element_by_xpath(
-            '//div[@id="pgNameVal"]').text.split(' ')[0]
+            '//div[@class="key-stat-title"]').text.split(' ')[0]
         driver.quit()
 
         return rate
