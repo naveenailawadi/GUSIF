@@ -2,6 +2,7 @@ from MarketMonitor import ForexMonitor, CommodityMonitor, BondMonitor
 from MarketMonitor.secrets import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
 from MarketMonitor.TelegramBot import Messenger
 from Tracker import PriceMonitor, suppress_stdout
+from forex_python.bitcoin import BtcConverter
 from datetime import datetime as dt
 import schedule
 import time
@@ -12,6 +13,7 @@ MESSENGER = Messenger(TELEGRAM_TOKEN, TELEGRAM_CHAT_ID)
 FOREX_MONITOR = ForexMonitor()
 COMMODITY_MONITOR = CommodityMonitor()
 BOND_MONITOR = BondMonitor()
+BITCOIN_MONITOR = BtcConverter()
 
 # create lists of the symbols
 FOREX_SYMBOLS = ['EUR', 'CNY']
@@ -21,7 +23,8 @@ DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
 RATES_HTML = 'MarketMonitor/templates/rates.html'
 
 # sector settings
-SECTORS = ['SPY', 'XLK', 'XLC', 'XLV', 'XLY', 'XLF', 'XLE', 'XLU', 'XLB', 'XLI']
+SECTORS = ['SPY', 'XLK', 'XLC', 'XLV',
+           'XLY', 'XLF', 'XLE', 'XLU', 'XLB', 'XLI']
 SECTORS_SEND_TIME = '16:30'
 SECTORS_HTML = 'MarketMonitor/templates/sectors.html'
 
@@ -41,9 +44,10 @@ def send_rates():
     # get the current forex prices
     forex_rates = [FOREX_MONITOR.usd_to(symbol) for symbol in FOREX_SYMBOLS]
 
-    # get the oil price
+    # get the commodity prices
     oil_price = COMMODITY_MONITOR.get_wti_price()
     gold_price = COMMODITY_MONITOR.get_gold_price()
+    btc_price = f"Bitcoin: ${format(round(BITCOIN_MONITOR.get_latest_price('USD'),2), ',')}"
 
     # get the 10 year and 30 year bond prices
     bond_rates = [(year, BOND_MONITOR.get_yield(year)) for year in BOND_YEARS]
@@ -51,7 +55,7 @@ def send_rates():
     information = {
         'date': date,
         'forex_rates': forex_rates,
-        'commodities': [oil_price, gold_price],
+        'commodities': [oil_price, gold_price, btc_price],
         'bond_rates': bond_rates
     }
 

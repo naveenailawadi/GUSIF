@@ -8,12 +8,16 @@ SLEEP_INCREMENT = 2
 
 class ForexMonitor(CurrencyRates, CurrencyCodes):
     # create a function to compare based on a set forx
-    def usd_to(self, symbol):
+    def usd_to(self, currency_code):
         # get rate
-        rate = round(self.get_rate('USD', symbol), 2)
+        rate = round(self.get_rate('USD', currency_code), 2)
 
-        other_symbol = self.get_symbol(symbol)
-        return f"$1 : {other_symbol}{rate}"
+        symbol = self.get_symbol(currency_code)
+
+        return self.format(symbol, rate)
+
+    def format(self, symbol, rate):
+        return f"$1 : {symbol}{rate}"
 
 
 class CommodityMonitor:
