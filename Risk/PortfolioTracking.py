@@ -1,7 +1,6 @@
 from EarningsCalculator import TimeFrame
 from Tracker import Holding
 from Scraping import PorfolioScraper
-from secrets import BIVIO_USERNAME, BIVIO_PASSWORD
 from datetime import datetime as dt
 import pandas as pd
 import numpy as np
@@ -16,6 +15,7 @@ class Portfolio:
 
         for holding in holdings:
             holding.update_sector(self.name)
+
         self.holdings = holdings
 
     def add_holding(self, ticker, value=None, shares=None, timestamp=dt.now()):
@@ -110,12 +110,12 @@ class HoldingsManager(TimeFrame):
         return holding
 
 
-def make_portfolios(holdings_filepath):
+def make_portfolios(holdings_filepath, username, password):
     # load in the holdings
     sectors_df = pd.read_csv(holdings_filepath)
 
     scraper = PorfolioScraper(headless=True)
-    scraper.login(BIVIO_USERNAME, BIVIO_PASSWORD)
+    scraper.login(username, password)
     holdings, date = scraper.scrape_holdings()
     scraper.quit()
 

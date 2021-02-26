@@ -58,13 +58,13 @@ class PriceMonitor:
 
     def get_returns_on_timeframe(self, start_date, end_date, absolute=False):
         # get the close prices for both dates
-        try:
-            start_price = float(self.get_open_price(start_date))
-        except IndexError:
+        start_price = float(self.get_open_price(start_date))
+        end_price = float(self.get_close_price(end_date))
+
+        # cancel if not start or end price
+        if (not start_price) or (not end_price):
             print(f"Trouble with price for {self.ticker}")
             return None, None
-
-        end_price = float(self.get_close_price(end_date))
 
         # get the return
         absolute_returns = end_price - start_price
