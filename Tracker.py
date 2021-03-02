@@ -31,7 +31,7 @@ class PriceMonitor:
 
         # return a trading period
         period = TradingPeriod(start_date, start_price, today, end_price)
-        return f"{round(100 * period.percent_change(), 2)}%"
+        return self.format(period.percent_change())
 
     def get_open_price(self, date=dt.now()):
         data = yf.download(self.ticker, start=(
@@ -71,6 +71,9 @@ class PriceMonitor:
         percent_returns = absolute_returns / start_price
 
         return absolute_returns, percent_returns
+
+    def format_change(self, percent):
+        return f"{round(100 * percent, 2)}%"
 
 
 # create a holding class
