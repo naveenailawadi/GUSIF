@@ -2,7 +2,7 @@ from Tracker import PriceMonitor
 from datetime import datetime as dt
 import sys
 
-TICKERS = ['XLK', 'DELL', 'GOOG', 'LYFT', 'AVGO']
+TICKERS = ['XLK', 'DELL', 'GOOG', 'LYFT', 'TSM']
 
 
 def parse_date(arg):
