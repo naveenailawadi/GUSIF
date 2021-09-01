@@ -1,5 +1,7 @@
+from statistics import geometric_mean
 import requests
 import pandas as pd
+import numpy as np
 import time
 import os
 
@@ -8,6 +10,9 @@ DEFAULT_DOWNLOAD_FOLDER = "Risk/HistoricalReturns"
 
 # set a default wait time
 DEFAULT_WAIT_TIME = 5
+
+# set the trading days in a year
+TRADING_DAYS = 252
 
 # make a header
 USER_HEADER = {
@@ -20,11 +25,67 @@ class AnalyzedHolding:
         # open the data file
         self.df = pd.read_csv(data_file)
 
-    # make properties for everythin
+        # add a daily return column
+        self.df['Daily Return'] = np.log(
+            self.df['Adj Close'] / self.df['Open'])
+
+        self.df['1 + Daily Return'] = 1 + self.df['Daily Return']
+
+        # save key start and close prices
+        self.start_price = self.df['Open'][0]
+        self.end_price = self.df['Adj Close'].tail(1).item()
+
+    # make an overall HPR
+    @property
+    def hpr(self):
+        hpr = (self.end_price - self.start_price) / self.start_price
+        return hpr
+
+    # make an arithmetic average daily return
+    @property
+    def arithmetic_average_daily_return(self):
+        avg = np.average(self.df['Daily Return'])
+
+        return avg
+
+    # make a geometric average
+    @property
+    def geometric_average_daily_return(self):
+        avg = geometric_mean(self.df['1 + Daily Return']) - 1
+
+        return avg
+
+    # make an arithmetic average annualized return
+    @property
+    def arithmetic_average_annualized_return(self):
+        avg = TRADING_DAYS * self.arithmetic_average_daily_return
+
+        return avg
+
+    # make a geometric average annualized return
+    @property
+    def geometric_average_annualized_return(self):
+        avg = TRADING_DAYS * self.geometric_average_daily_return
+
+        return avg
+
+    # make daily return standard deviation
+    @property
+    def daily_return_stdev(self):
+        stdev = np.std(self.df['Daily Return'])
+
+        return stdev
+
+    # make an annualized return standard deviation
+    @property
+    def annualized_return_stdev(self):
+        stdev = self.daily_return_stdev * np.sqrt(TRADING_DAYS)
+
+        return stdev
 
 
 # make a returns analyzer class
-class ReturnsAnalyzer:
+class ReturnsDataHandler:
     # make a function to get the historical returns of one stock
     # period start and end are in seconds
     def get_daily_returns(self, ticker, period_start, period_end, download_folder=DEFAULT_DOWNLOAD_FOLDER, wait_time=DEFAULT_WAIT_TIME):
