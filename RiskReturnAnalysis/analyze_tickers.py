@@ -15,7 +15,7 @@ def analyze(data_directory, output_file):
 
     for ticker in tickers:
         print(f"Analyzing {ticker}")
-        holding = AnalyzedHolding(f"Risk/HistoricalReturns/{ticker}.csv")
+        holding = AnalyzedHolding(f"{data_directory}/{ticker}.csv")
 
         holding_data = {
             "ticker": holding.ticker,
@@ -35,7 +35,7 @@ def analyze(data_directory, output_file):
 
     # export the analysis
     df = pd.DataFrame(analyzed_holdings)
-    df.to_excel('RiskReturnAnalysis/Analysis.xlsx')
+    df.to_excel(f"{output_file.split('.')[0]}.xlsx")
 
 
 if __name__ == '__main__':
