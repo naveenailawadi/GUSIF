@@ -1,11 +1,12 @@
 from Risk.HistoricalReturnAnalysis import AnalyzedHolding, ReturnsDataHandler
 import pandas as pd
+import sys
 
 
 # make a main function to handle everythin
-def main():
+def analyze(data_directory, output_file):
     # make a data handler to get all the tickers
-    data_handler = ReturnsDataHandler()
+    data_handler = ReturnsDataHandler(data_directory)
 
     tickers = data_handler.current_tickers()
 
@@ -38,4 +39,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # get the arguments from the system
+    data_directory = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # analyze the data
+    analyze(data_directory, output_file)

@@ -1,18 +1,16 @@
 from Risk.HistoricalReturnAnalysis import ReturnsDataHandler
 import pandas as pd
 import time
-
-# set the ticker data
-TICKER_FILE = 'RiskReturnAnalysis/Russell2000_8_31.csv'
+import sys
 
 
 # download all the data with the Returns handler
-def main():
+def download(ticker_file, output_directory, column_header='tickers'):
     # make an handler
-    handler = ReturnsDataHandler()
+    handler = ReturnsDataHandler(output_directory)
 
     # import all the tickers
-    tickers = list(pd.read_csv(TICKER_FILE)['tickers'])
+    tickers = list(pd.read_csv(ticker_file)[column_header])
 
     # find the current data
     found_tickers = handler.current_tickers()
@@ -29,4 +27,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # get the arguments from the system
+    ticker_file = sys.argv[1]
+    output_directory = sys.argv[2]
+
+    # download the data
+    download(ticker_file, output_directory)

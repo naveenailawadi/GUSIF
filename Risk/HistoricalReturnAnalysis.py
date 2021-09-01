@@ -88,14 +88,17 @@ class AnalyzedHolding:
 
 # make a returns analyzer class
 class ReturnsDataHandler:
+    def __init__(self, download_folder=DEFAULT_DOWNLOAD_FOLDER):
+        self.download_folder = download_folder
+
     # make a function to get the historical returns of one stock
     # period start and end are in seconds
-    def get_daily_returns(self, ticker, period_start, period_end, download_folder=DEFAULT_DOWNLOAD_FOLDER, wait_time=DEFAULT_WAIT_TIME):
+    def get_daily_returns(self, ticker, period_start, period_end, wait_time=DEFAULT_WAIT_TIME):
         # make the url
         url = f"https://query1.finance.yahoo.com/v7/finance/download/{ticker}?period1={period_start}&period2={period_end}&interval=1d&events=history&includeAdjustedClose=true"
 
         # make an outfile
-        outfile = f"{download_folder}/{ticker}.csv"
+        outfile = f"{self.download_folder}/{ticker}.csv"
 
         # request the data from the url
         raw = requests.get(url, headers=USER_HEADER, timeout=5)
@@ -110,10 +113,10 @@ class ReturnsDataHandler:
             time.sleep(wait_time)
 
     # make a function that gets all the current companies in the folder
-    def current_tickers(self, download_folder=DEFAULT_DOWNLOAD_FOLDER):
+    def current_tickers(self):
         # get all the files
-        files = [f for f in os.listdir(download_folder) if os.path.isfile(
-            os.path.join(download_folder, f))]
+        files = [f for f in os.listdir(self.download_folder) if os.path.isfile(
+            os.path.join(self.download_folder, f))]
 
         # format the files into tickers
         tickers = [file.split('.')[0] for file in files]
