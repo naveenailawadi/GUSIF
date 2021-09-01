@@ -25,6 +25,8 @@ class AnalyzedHolding:
         # open the data file
         self.df = pd.read_csv(data_file)
 
+        self.ticker = data_file.split('.')[0].split('/')[-1]
+
         # add a daily return column
         self.df['Daily Return'] = np.log(
             self.df['Adj Close'] / self.df['Open'])

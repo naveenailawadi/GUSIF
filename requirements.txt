@@ -6,3 +6,6 @@ selenium
 yfinance
 forex-python
 schedule
+openpyxl
+pandas
+numpy
